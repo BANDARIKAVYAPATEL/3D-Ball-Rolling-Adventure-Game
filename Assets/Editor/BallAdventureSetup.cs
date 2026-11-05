@@ -1,0 +1,6 @@
+#if UNITY_EDITOR
+using UnityEditor;using UnityEditor.SceneManagement;using UnityEngine;using System.IO;
+public static class BallAdventureSetup{
+[MenuItem("Tools/Ball Adventure/Create Game Scene")]
+public static void Create(){if(!Directory.Exists("Assets/Scenes"))Directory.CreateDirectory("Assets/Scenes");var s=EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);var cam=new GameObject("Main Camera");cam.tag="MainCamera";cam.AddComponent<Camera>();cam.AddComponent<AudioListener>();cam.transform.position=new Vector3(0,8,-11);cam.transform.rotation=Quaternion.Euler(30,0,0);var l=new GameObject("Directional Light");var light=l.AddComponent<Light>();light.type=LightType.Directional;light.intensity=1.4f;l.transform.rotation=Quaternion.Euler(50,-30,0);new GameObject("Game Manager").AddComponent<BallAdventureGame>();var path="Assets/Scenes/MainGame.unity";EditorSceneManager.SaveScene(s,path);EditorBuildSettings.scenes=new[]{new EditorBuildSettingsScene(path,true)};AssetDatabase.SaveAssets();AssetDatabase.Refresh();EditorSceneManager.OpenScene(path);EditorUtility.DisplayDialog("Ready","Scene created. Press Play. WASD/arrow keys move. N advances after finish.","OK");}}
+#endif
